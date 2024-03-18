@@ -6,9 +6,12 @@ const fastify = Fastify({
   logger: false,
 });
 
+connection();
+
 const PORT = 5000;
 
 fastify.get("/", (req, reply) => {
+  
   reply.send({
     code: 200,
     status: "UP",
@@ -16,9 +19,21 @@ fastify.get("/", (req, reply) => {
   });
 });
 
-connection();
 
+
+fastify.get("/produto", produtoService.buscarProdutos);
 fastify.get("/produtos", produtoService.buscarProdutos);
+fastify.get("/produto/?status=ativo", produtoService.buscarProdutos);
+// fastify.post("/produto", produtoService.addProduto);
+// fastify.put("/produto/:id", produtoService.atualizarProduto);
+// fastify.patch("/produto/:id", produtoService.atualizarParcialProduto);
+// fastify.delete("/produto/:id", produtoService.deleteProduto);
+
+//GET /produto GET /produtos GET /produto/?status=ativo 
+//POST /produto 
+//PUT /produto/:id 
+//PATCH /produto/:id 
+//DELETE /produto/:id
 
 fastify.listen({ port: PORT }, (err, address) => {
   if (err) {

@@ -8,5 +8,6 @@ export const config = new Pool({
     host: 'localhost',
     database: 'dc_produtos',
     password: 'col@123',
-    port: 5432,
+    port: 5432
+    
 });
