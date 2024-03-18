@@ -1,26 +1,29 @@
-import Fastify from 'fastify'
-import { produtoService } from './services/produtos.service.js'
+import Fastify from "fastify";
+import { produtoService } from "./services/produtos.service.js";
+import { connection } from "./db/db.js";
 
 const fastify = Fastify({
-    logger: true
+  logger: false,
+});
 
-})
+const PORT = 5000;
 
-const PORT = 5000
+fastify.get("/", (req, reply) => {
+  reply.send({
+    code: 200,
+    status: "UP",
+    message: "Servidor Rodando!",
+  });
+});
 
-fastify.get('/', (req, reply) => {
-    reply.send('Servidor rotando - Fastify')
+connection();
 
-})
+fastify.get("/produtos", produtoService.buscarProdutos);
 
-fastify.get('/produtos', produtoService.buscarProdutos);
-
-
-fastify.listen({port: PORT}, (err, address)=>{
-    if(err){
-        console.error('Erro ao subuir o servidor', err)
-        return;
-    }
-    console.log(`Server ins now listening on ${address}`);
-})
-
+fastify.listen({ port: PORT }, (err, address) => {
+  if (err) {
+    console.error("Erro ao subuir o servidor", err);
+    return;
+  }
+  console.log(`Server ins now listening on ${address}`);
+});
