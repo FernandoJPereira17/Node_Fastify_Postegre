@@ -1,25 +1,36 @@
 import { produtos } from "../db/produtos.js";
 
-
 export const produtoService = {
-    buscarProdutos: (req, reply)=>{
-        return {
+  buscarProdutos: (req, reply) => {
+    return {
+      code: 200,
+      status: "UP",
+      message: "Servidor Rodando!",
+    };
+  },
+  addProduto: (req, res) => {
 
-            code:200,
-            status: "UP",
-            message: "Servidor Rodando!"
+        let produtoReq = req.body;
+        let id = produtos.length +1
+        req.body.nome = `Produto${id}`
+        req.body.id = id
+        return produtos.push(produtoReq);
 
-        }
-    },
-    addProduto: (req, reply) =>{
-        let idNext = produtos.length = 1;
-        const { id, nome, descricao, desconto, preco, ativo, categoria, data_cadastro } = req.body
-         let produtoBd = {
-            id: idNext,
-            nome: `Produto ${idNext}`,
-            descricao: `Produto ${descricao}`,
-            desconto: `Produto ${desconto}`
 
-         }
-    } 
-}
+    // let idNext = produtos.length + 1;
+    // const { id, nome, descricao, desconto, preco, ativo, categoria, data_cadastro } = req.body
+    // let produtoBd = {
+    //     id: idNext,
+    //     nome: `Nome ${idNext}`,
+    //     descricao,
+    //     desconto,
+    //     preco,
+    //     ativo,
+    //     categoria,
+    //     data_cadastro,
+    //  }
+    //  return produtos.push(produtoBd);
+  },
+
+  
+};

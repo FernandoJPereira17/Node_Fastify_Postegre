@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import { produtoService } from "./services/produtos.service.js";
 import { connection } from "./db/db.js";
+import { config } from "./db/config/index.js";
 
 const fastify = Fastify({
   logger: false,
@@ -19,12 +20,15 @@ fastify.get("/", (req, reply) => {
   });
 });
 
-
+fastify.get("/produto/:id", async (req, res)=> {
+    const result = await config.query('SELECT * from produtos');
+    return result.rows;
+});
 
 fastify.get("/produto", produtoService.buscarProdutos);
 fastify.get("/produtos", produtoService.buscarProdutos);
 fastify.get("/produto/?status=ativo", produtoService.buscarProdutos);
-// fastify.post("/produto", produtoService.addProduto);
+fastify.post("/produto", produtoService.addProduto);
 // fastify.put("/produto/:id", produtoService.atualizarProduto);
 // fastify.patch("/produto/:id", produtoService.atualizarParcialProduto);
 // fastify.delete("/produto/:id", produtoService.deleteProduto);
